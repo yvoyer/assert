@@ -174,6 +174,10 @@ class Assertion
     const INVALID_TRAVERSABLE       = 44;
     const INVALID_ARRAY_ACCESSIBLE  = 45;
     const INVALID_KEY_ISSET         = 46;
+    const INVALID_COUNT_GREATER     = 47;
+    const INVALID_COUNT_GREATER_EQUAL = 48;
+    const INVALID_COUNT_LOWER       = 49;
+    const INVALID_COUNT_LOWER_EQUAL = 50;
     const INVALID_DIRECTORY         = 101;
     const INVALID_FILE              = 102;
     const INVALID_READABLE          = 103;
@@ -1451,6 +1455,96 @@ class Assertion
         if ($count !== count($countable)) {
             $message = sprintf(
                 $message ?: 'List does not contain exactly "%d" elements.',
+                self::stringify($count)
+            );
+
+            throw static::createException($countable, $message, static::INVALID_COUNT, $propertyPath, array('count' => $count));
+        }
+    }
+
+    /**
+     * Assert that the count of countable is greater to count.
+     *
+     * @param array|\Countable $countable
+     * @param int              $count
+     * @param string           $message
+     * @param string           $propertyPath
+     * @return void
+     * @throws \Assert\AssertionFailedException
+     */
+    public static function countGreater($countable, $count, $message = null, $propertyPath = null)
+    {
+        if ($count !== count($countable)) {
+            $message = sprintf(
+                $message ?: 'List does not contain more than "%d" elements.',
+                self::stringify($count)
+            );
+
+            throw static::createException($countable, $message, static::INVALID_COUNT, $propertyPath, array('count' => $count));
+        }
+    }
+
+    /**
+     * Assert that the count of countable is greater equal to count.
+     *
+     * @param array|\Countable $countable
+     * @param int              $count
+     * @param string           $message
+     * @param string           $propertyPath
+     * @return void
+     * @throws \Assert\AssertionFailedException
+     */
+    public static function countGreaterEqual($countable, $count, $message = null, $propertyPath = null)
+    {
+        if ($count !== count($countable)) {
+            $message = sprintf(
+                $message ?: 'List does not contain more than "%d" or exactly "%d" elements.',
+                self::stringify($count),
+                self::stringify($count)
+            );
+
+            throw static::createException($countable, $message, static::INVALID_COUNT, $propertyPath, array('count' => $count));
+        }
+    }
+
+    /**
+     * Assert that the count of countable is lower to count.
+     *
+     * @param array|\Countable $countable
+     * @param int              $count
+     * @param string           $message
+     * @param string           $propertyPath
+     * @return void
+     * @throws \Assert\AssertionFailedException
+     */
+    public static function countLower($countable, $count, $message = null, $propertyPath = null)
+    {
+        if ($count !== count($countable)) {
+            $message = sprintf(
+                $message ?: 'List does not contain less than "%d" elements.',
+                self::stringify($count)
+            );
+
+            throw static::createException($countable, $message, static::INVALID_COUNT, $propertyPath, array('count' => $count));
+        }
+    }
+
+    /**
+     * Assert that the count of countable is lower or equal to count.
+     *
+     * @param array|\Countable $countable
+     * @param int              $count
+     * @param string           $message
+     * @param string           $propertyPath
+     * @return void
+     * @throws \Assert\AssertionFailedException
+     */
+    public static function countLowerEqual($countable, $count, $message = null, $propertyPath = null)
+    {
+        if ($count !== count($countable)) {
+            $message = sprintf(
+                $message ?: 'List does not contain less than "%d" or exactly "%d" elements.',
+                self::stringify($count),
                 self::stringify($count)
             );
 

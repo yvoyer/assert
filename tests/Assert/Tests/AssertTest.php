@@ -921,6 +921,137 @@ class AssertTest extends \PHPUnit_Framework_TestCase
         Assertion::count($countable, $count);
     }
 
+    public function testValidCountGreaterThan()
+    {
+        Assertion::countGreater(array(1), 0);
+        Assertion::countGreater(array(1, 2), 1);
+        Assertion::countGreater(new OneCountable(), 0);
+    }
+
+    /**
+     * @param $value
+     * @param $count
+     *
+     * @dataProvider provideInvalidForCountGreater
+     */
+    public function testInvalidCountGreater($value, $count)
+    {
+        $this->markTestSkipped('TODO');
+        $this->setExpectedException(
+            'Assert\AssertionFailedException',
+            'List does not contain exactly "'.$count.'" elements.', Assertion::INVALID_COUNT_GREATER
+        );
+        Assertion::countGreater($value, $count);
+    }
+
+    public static function provideInvalidForCountGreater()
+    {
+        return array(
+            array(array(), 0),
+            array(array(1), 2),
+        );
+    }
+
+    public function testValidCountGreaterEqual()
+    {
+        Assertion::countGreaterEqual(array(1), 0);
+        Assertion::countGreaterEqual(array(1), 1);
+        Assertion::countGreaterEqual(array(1, 2), 2);
+        Assertion::countGreaterEqual(new OneCountable(), 1);
+    }
+
+    /**
+     * @param $value
+     * @param $count
+     *
+     * @dataProvider provideInvalidForCountGreaterEqual
+     */
+    public function testInvalidCountGreaterEqual($value, $count)
+    {
+        $this->markTestSkipped('TODO');
+        $this->setExpectedException(
+            'Assert\AssertionFailedException',
+            'List does not contain exactly "'.$count.'" elements.', Assertion::INVALID_COUNT_GREATER_EQUAL
+        );
+        Assertion::countGreaterEqual($value, $count);
+    }
+
+    public static function provideInvalidForCountGreaterEqual()
+    {
+        return array(
+            array(array(1), 0),
+            array(array(1, 2), 1),
+            array(array(1), 2),
+        );
+    }
+
+    public function testValidCountLower()
+    {
+        Assertion::countLower(array(1), 0);
+        Assertion::countLower(array(1), 1);
+        Assertion::countLower(array(1, 2), 3);
+        Assertion::countLower(new OneCountable(), 1);
+    }
+
+    /**
+     * @param $value
+     * @param $count
+     *
+     * @dataProvider provideInvalidForCountLower
+     */
+    public function testInvalidCountLower($value, $count)
+    {
+        $this->markTestSkipped('TODO');
+        $this->setExpectedException(
+            'Assert\AssertionFailedException',
+            'List does not contain exactly "'.$count.'" elements.', Assertion::INVALID_COUNT_LOWER
+        );
+        Assertion::countLower($value, $count);
+    }
+
+    public static function provideInvalidForCountLower()
+    {
+        return array(
+            array(array(1), 0),
+            array(array(1, 2), 1),
+            array(array(1), 2),
+        );
+    }
+
+    public function testValidCountLowerEqual()
+    {
+        Assertion::countLowerEqual(array(1), 0);
+        Assertion::countLowerEqual(array(1), 1);
+        Assertion::countLowerEqual(array(1, 2), 2);
+        Assertion::countLowerEqual(new OneCountable(), 0);
+        Assertion::countLowerEqual(new OneCountable(), 1);
+    }
+
+    /**
+     * @param $value
+     * @param $count
+     *
+     * @dataProvider provideInvalidForCountLowerEqual
+     */
+    public function testInvalidCountLowerEqual($value, $count)
+    {
+        $this->markTestSkipped('TODO');
+        $this->setExpectedException(
+            'Assert\AssertionFailedException',
+            'List does not contain exactly "'.$count.'" elements.', Assertion::INVALID_COUNT_LOWER_EQUAL
+        );
+        Assertion::countLower($value, $count);
+    }
+
+    public static function provideInvalidForCountLowerEqual()
+    {
+        return array(
+            array(array(1), 0),
+            array(array(1, 2), 1),
+            array(array(1), 2),
+        );
+    }
+
     public function testChoicesNotEmpty()
     {
         Assertion::choicesNotEmpty(
