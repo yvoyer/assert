@@ -768,6 +768,7 @@ class Assertion
     {
         static::string($value, $message, $propertyPath);
 
+        // todo use static::minLength
         if (mb_strlen($value, $encoding) < $minLength) {
             $message = sprintf(
                 $message ?: 'Value "%s" is too short, it should have at least %d characters, but only has %d characters.',
@@ -780,6 +781,7 @@ class Assertion
             throw static::createException($value, $message, static::INVALID_MIN_LENGTH, $propertyPath, $constraints);
         }
 
+        // todo use static::maxLength
         if (mb_strlen($value, $encoding) > $maxLength) {
             $message = sprintf(
                 $message ?: 'Value "%s" is too long, it should have no more than %d characters, but has %d characters.',
@@ -898,7 +900,7 @@ class Assertion
     {
         if (! in_array($value, $choices, true)) {
             $message = sprintf(
-                $message ?: 'Value "%s" is not an element of the valid values: %s',
+                $message ?: 'Value "%s" is not an element of the valid values: %s.',
                 static::stringify($value),
                 implode(", ", array_map('Assert\Assertion::stringify', $choices))
             );
@@ -1031,7 +1033,7 @@ class Assertion
 
         if (! array_key_exists($key, $value)) {
             $message = sprintf(
-                $message ?: 'Array does not contain an element with key "%s"',
+                $message ?: 'Array does not contain an element with key "%s".',
                 static::stringify($key)
             );
 
@@ -1057,7 +1059,7 @@ class Assertion
 
         if (array_key_exists($key, $value)) {
             $message = sprintf(
-                $message ?: 'Array contains an element with key "%s"',
+                $message ?: 'Array contains an element with key "%s".',
                 self::stringify($key)
             );
 
@@ -1083,7 +1085,7 @@ class Assertion
 
         if (! isset($value[$key])) {
             $message = sprintf(
-                $message ?: 'The element with key "%s" was not found',
+                $message ?: 'The element with key "%s" was not found.',
                 static::stringify($key)
             );
 
@@ -1471,7 +1473,7 @@ class Assertion
 
         if (!preg_match($pattern, $value)) {
             $message = sprintf(
-                $message ?: 'Value "%s" was expected to be a valid URL starting with http or https',
+                $message ?: 'Value "%s" was expected to be a valid URL starting with http or https.',
                 static::stringify($value)
             );
 
